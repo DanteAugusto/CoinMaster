@@ -18,5 +18,14 @@ public class ContaService {
         conta.setSaldo(0.0);
         return contaRepository.save(conta);
     }
+
+    public Conta porCredito(String numero, double credito) {
+        Conta conta = contaRepository.findById(numero).orElse(null);
+        if (conta != null) {
+            conta.setSaldo(conta.getSaldo() + credito);
+            contaRepository.save(conta);
+        }
+        return conta;
+    }
 }
 

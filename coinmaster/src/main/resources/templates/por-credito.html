@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cadastrar Conta</title>
+    <meta charset="UTF-8">
+    <style>
+        /* Remove as setas nos navegadores baseados em WebKit (Chrome, Safari, Edge, Opera) */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Remove as setas no Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cadastrar Nova Conta</h1>
+    <form action="#" th:action="@{/contas/credito}" method="post">
+        <label for="numero">Número da Conta:</label>
+        <input type="number" id="numero" name="numero" required />
+        <label for="credito">Crédito a pôr:</label>
+        <input type="double" id="credito" name="credito" required />
+        <button type="submit">Cadastrar</button>
+    </form>
+</body>
+</html>
