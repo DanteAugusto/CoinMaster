@@ -22,7 +22,7 @@ public class ContaController {
     }
 
     @GetMapping("/cadastrar-conta")
-    public String mostrarFormulario() {
+    public String cadastrarContaInterface() {
         return "cadastrar-conta";
     }
 }
