@@ -54,5 +54,11 @@ public class ContaController {
         double saldo = contaService.consultarSaldo(numero);
         return ResponseEntity.ok(saldo);
     } 
+
+    @PostMapping("/debito")
+    public ResponseEntity<Conta> debito(@RequestParam String numero, @RequestParam double valor) {
+        Conta conta = contaService.debito(numero, valor);
+        return ResponseEntity.ok(conta);
+    }
 }
 
