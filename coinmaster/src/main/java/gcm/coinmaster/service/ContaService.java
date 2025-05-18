@@ -24,7 +24,7 @@ public class ContaService {
         Conta contaOrigem = contaRepository.findById(origem).orElse(null);
         Conta contaDestino = contaRepository.findById(destino).orElse(null);
 
-        if (contaOrigem != null && contaDestino != null && contaOrigem.getSaldo() >= valor) {
+        if (contaOrigem != null && contaDestino != null) {
             contaOrigem.setSaldo(contaOrigem.getSaldo() - valor);
             contaDestino.setSaldo(contaDestino.getSaldo() + valor);
             contaRepository.save(contaOrigem);
