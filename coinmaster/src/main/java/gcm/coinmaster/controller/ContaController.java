@@ -37,5 +37,16 @@ public class ContaController {
     public String fazerTransferenciaInterface() {
         return "fazer-transferencia";
     }
+    
+    @PostMapping("/credito")
+    public ResponseEntity<Conta> porCredito(@RequestParam String numero, @RequestParam double credito) {
+        Conta conta = contaService.porCredito(numero, credito);
+        return ResponseEntity.ok(conta);
+    }
+
+    @GetMapping("/por-credito")
+    public String porCreditoInterface() {
+        return "por-credito";
+    }
 }
 

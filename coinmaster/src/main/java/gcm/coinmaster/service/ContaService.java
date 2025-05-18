@@ -33,5 +33,13 @@ public class ContaService {
 
         return new TransferenciaDTO(contaOrigem, contaDestino,valor);
     }
+    public Conta porCredito(String numero, double credito) {
+        Conta conta = contaRepository.findById(numero).orElse(null);
+        if (conta != null) {
+            conta.setSaldo(conta.getSaldo() + credito);
+            contaRepository.save(conta);
+        }
+        return conta;
+    }
 }
 
