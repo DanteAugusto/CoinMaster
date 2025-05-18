@@ -41,5 +41,14 @@ public class ContaService {
         }
         return conta;
     }
+
+    public double consultarSaldo(String numero) {
+        Conta conta = contaRepository.findById(numero).orElse(null);
+        if(conta != null) {
+            return conta.getSaldo();
+        } else {
+            return 0;
+        }
+    }
 }
 
