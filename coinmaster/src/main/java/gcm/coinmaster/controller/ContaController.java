@@ -48,5 +48,11 @@ public class ContaController {
     public String porCreditoInterface() {
         return "por-credito";
     }
+
+    @GetMapping("/consultar-saldo")
+    public ResponseEntity<Double> consultarSaldo(@RequestParam String numero) {
+        double saldo = contaService.consultarSaldo(numero);
+        return ResponseEntity.ok(saldo);
+    } 
 }
 
