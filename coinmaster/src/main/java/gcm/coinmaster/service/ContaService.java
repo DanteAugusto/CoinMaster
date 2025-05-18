@@ -50,5 +50,14 @@ public class ContaService {
             return 0;
         }
     }
+
+    public Conta debito(String numero, double valor) {
+        Conta conta = contaRepository.findById(numero).orElse(null);
+        if(conta != null) {
+            conta.setSaldo(conta.getSaldo() - valor);
+            contaRepository.save(conta);
+        }
+        return conta;
+    }
 }
 
