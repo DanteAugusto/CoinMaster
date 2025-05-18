@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import gcm.coinmaster.model.Conta;
+import gcm.coinmaster.model.DTO.TransferenciaDTO;
 import gcm.coinmaster.service.ContaService;
 
 @Controller
@@ -24,6 +25,17 @@ public class ContaController {
     @GetMapping("/cadastrar-conta")
     public String cadastrarContaInterface() {
         return "cadastrar-conta";
+    }
+
+    @PostMapping("/transferencia")
+    public ResponseEntity<TransferenciaDTO> fazerTransferencia(@RequestParam String origem, @RequestParam String destino, @RequestParam double valor) {
+        TransferenciaDTO transferenciaDTO = contaService.fazerTransferencia(origem, destino, valor);
+        return ResponseEntity.ok(transferenciaDTO);
+    }
+
+    @GetMapping("/fazer-transferencia")
+    public String fazerTransferenciaInterface() {
+        return "fazer-transferencia";
     }
 }
 
