@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import gcm.coinmaster.model.Conta;
+import gcm.coinmaster.model.ContaBonus;
 import gcm.coinmaster.model.DTO.TransferenciaDTO;
 import gcm.coinmaster.repository.ContaRepository;
 
@@ -20,15 +21,32 @@ public class ContaService {
         return contaRepository.save(conta);
     }
 
+    public ContaBonus cadastrarContaBonus(String numero) {
+        ContaBonus contaBonus = new ContaBonus();
+        contaBonus.setNumero(numero);
+        contaBonus.setSaldo(0);
+        contaBonus.setPontuacao(10);
+
+        return contaRepository.save(contaBonus);
+    }
+
     public TransferenciaDTO fazerTransferencia(String origem, String destino, double valor) {
         Conta contaOrigem = contaRepository.findById(origem).orElse(null);
         Conta contaDestino = contaRepository.findById(destino).orElse(null);
 
         if (contaOrigem != null && contaDestino != null && contaOrigem.getSaldo() >= valor) {
             contaOrigem.setSaldo(contaOrigem.getSaldo() - valor);
-            contaDestino.setSaldo(contaDestino.getSaldo() + valor);
             contaRepository.save(contaOrigem);
-            contaRepository.save(contaDestino);
+
+            if(contaDestino instanceof ContaBonus contaDestinoBonus) {
+                contaDestinoBonus.setPontuacao(contaDestinoBonus.getPontuacao() + (int) valor/200);
+                contaDestinoBonus.setSaldo(contaDestinoBonus.getSaldo() + valor);
+                contaRepository.save(contaDestinoBonus);
+            } else {
+                contaDestino.setSaldo(contaDestino.getSaldo() + valor);
+                contaRepository.save(contaDestino);
+            }
+
         }
 
         return new TransferenciaDTO(contaOrigem, contaDestino,valor);
@@ -36,8 +54,14 @@ public class ContaService {
     public Conta porCredito(String numero, double credito) {
         Conta conta = contaRepository.findById(numero).orElse(null);
         if (conta != null) {
-            conta.setSaldo(conta.getSaldo() + credito);
-            contaRepository.save(conta);
+            if(conta instanceof ContaBonus contaBonus) {
+                contaBonus.setPontuacao(contaBonus.getPontuacao() + (int) credito/100);
+                contaBonus.setSaldo(contaBonus.getSaldo() + credito);
+                contaRepository.save(contaBonus);
+            } else {
+                conta.setSaldo(conta.getSaldo() + credito);
+                contaRepository.save(conta);
+            }
         }
         return conta;
     }

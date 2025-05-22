@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import gcm.coinmaster.model.Conta;
+import gcm.coinmaster.model.ContaBonus;
 import gcm.coinmaster.model.DTO.TransferenciaDTO;
 import gcm.coinmaster.service.ContaService;
 
@@ -21,6 +22,13 @@ public class ContaController {
         Conta conta = contaService.cadastrarConta(numero);
         return ResponseEntity.ok(conta);
     }
+
+    @PostMapping("/cadastrar-conta-bonus")
+    public ResponseEntity<Conta> cadastrarContaBonus(@RequestParam String numero) {
+        ContaBonus conta = contaService.cadastrarContaBonus(numero);
+        return ResponseEntity.ok(conta);
+    }
+
 
     @GetMapping("/cadastrar-conta")
     public String cadastrarContaInterface() {
