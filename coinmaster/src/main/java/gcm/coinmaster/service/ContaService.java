@@ -1,9 +1,13 @@
 package gcm.coinmaster.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import gcm.coinmaster.model.Conta;
+import gcm.coinmaster.model.ContaPoupanca;
 import gcm.coinmaster.model.ContaBonus;
 import gcm.coinmaster.model.DTO.TransferenciaDTO;
 import gcm.coinmaster.repository.ContaRepository;
@@ -82,6 +86,36 @@ public class ContaService {
             contaRepository.save(conta);
         }
         return conta;
+    }
+
+    public ContaPoupanca cadastrarContaPoupanca(String numero) {
+        ContaPoupanca conta = new ContaPoupanca();
+        conta.setNumero(numero);
+        conta.setSaldo(0.0);
+        return contaRepository.save(conta);
+    }
+
+    public ContaPoupanca renderJuros(String numero, double taxa) {
+        Conta conta = contaRepository.findById(numero).orElse(null);
+        if(conta != null && conta instanceof ContaPoupanca contaPoupanca){
+            contaPoupanca.setSaldo(contaPoupanca.getSaldo() + (contaPoupanca.getSaldo()*taxa)/100);
+            contaRepository.save(contaPoupanca);
+            return contaPoupanca;
+        }
+        return null;
+    }
+
+    public List<ContaPoupanca> renderJurosTodos(double taxa) {
+        List<Conta> contas = contaRepository.findAll();
+        List<ContaPoupanca> retorno = new ArrayList<>();
+
+        for (Conta conta : contas) {
+            ContaPoupanca jurosRendido = renderJuros(conta.getNumero(), taxa);
+            if(jurosRendido!=null)
+                retorno.add(jurosRendido);
+        }
+
+        return retorno;
     }
 }
 
