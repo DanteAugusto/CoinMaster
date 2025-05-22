@@ -1,15 +1,18 @@
 package gcm.coinmaster.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import gcm.coinmaster.model.Conta;
+import gcm.coinmaster.model.ContaPoupanca;
 import gcm.coinmaster.model.DTO.TransferenciaDTO;
 import gcm.coinmaster.service.ContaService;
 
-@Controller
+@RestController
 @RequestMapping("/contas")
 public class ContaController {
 
@@ -20,6 +23,26 @@ public class ContaController {
     public ResponseEntity<Conta> cadastrarConta(@RequestParam String numero) {
         Conta conta = contaService.cadastrarConta(numero);
         return ResponseEntity.ok(conta);
+    }
+
+    @PostMapping("/cadastrarPoupanca")
+    public ResponseEntity<ContaPoupanca> cadastrarContaPoupanca(@RequestParam String numero) {
+        ContaPoupanca contaPoupanca = contaService.cadastrarContaPoupanca(numero);
+        return ResponseEntity.ok(contaPoupanca);
+    }
+
+    @PostMapping("/renderJuros")
+    public ResponseEntity<ContaPoupanca> renderJuros(@RequestParam String numero, @RequestParam double taxa) { //taxa = 10 quer dizer 10%
+        ContaPoupanca contaPoupanca;
+        contaPoupanca = contaService.renderJuros(numero, taxa);
+        return ResponseEntity.ok(contaPoupanca);
+    }
+
+    @PostMapping("/renderJurosTodos")
+    public ResponseEntity<List<ContaPoupanca>> renderJurosTodos(@RequestParam double taxa) {
+        List<ContaPoupanca> contaPoupancas;
+        contaPoupancas = contaService.renderJurosTodos(taxa);
+        return ResponseEntity.ok(contaPoupancas);
     }
 
     @GetMapping("/cadastrar-conta")
