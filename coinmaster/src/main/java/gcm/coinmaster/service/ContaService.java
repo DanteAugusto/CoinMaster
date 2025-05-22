@@ -24,7 +24,7 @@ public class ContaService {
         Conta contaOrigem = contaRepository.findById(origem).orElse(null);
         Conta contaDestino = contaRepository.findById(destino).orElse(null);
 
-        if (contaOrigem != null && contaDestino != null) {
+        if (contaOrigem != null && contaDestino != null && contaOrigem.getSaldo() >= valor) {
             contaOrigem.setSaldo(contaOrigem.getSaldo() - valor);
             contaDestino.setSaldo(contaDestino.getSaldo() + valor);
             contaRepository.save(contaOrigem);
@@ -53,7 +53,7 @@ public class ContaService {
 
     public Conta debito(String numero, double valor) {
         Conta conta = contaRepository.findById(numero).orElse(null);
-        if(conta != null) {
+        if(conta != null && conta.getSaldo() >= valor) {
             conta.setSaldo(conta.getSaldo() - valor);
             contaRepository.save(conta);
         }
