@@ -35,6 +35,10 @@ public class ContaService {
     }
 
     public TransferenciaDTO fazerTransferencia(String origem, String destino, double valor) {
+        if (valor < 0) {
+            return null;
+        }
+
         Conta contaOrigem = contaRepository.findById(origem).orElse(null);
         Conta contaDestino = contaRepository.findById(destino).orElse(null);
 
@@ -56,6 +60,10 @@ public class ContaService {
         return new TransferenciaDTO(contaOrigem, contaDestino,valor);
     }
     public Conta porCredito(String numero, double credito) {
+        if (credito < 0) {
+            return null;
+        }
+
         Conta conta = contaRepository.findById(numero).orElse(null);
         if (conta != null) {
             if(conta instanceof ContaBonus contaBonus) {
@@ -80,6 +88,10 @@ public class ContaService {
     }
 
     public Conta debito(String numero, double valor) {
+        if (valor < 0) {
+            return null;
+        }
+        
         Conta conta = contaRepository.findById(numero).orElse(null);
         if(conta != null && conta.getSaldo() >= valor) {
             conta.setSaldo(conta.getSaldo() - valor);
