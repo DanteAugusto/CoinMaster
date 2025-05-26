@@ -100,10 +100,10 @@ public class ContaService {
         return conta;
     }
 
-    public ContaPoupanca cadastrarContaPoupanca(String numero) {
+    public ContaPoupanca cadastrarContaPoupanca(String numero, Double saldoInicial) {
         ContaPoupanca conta = new ContaPoupanca();
         conta.setNumero(numero);
-        conta.setSaldo(0.0);
+        conta.setSaldo(saldoInicial);
         return contaRepository.save(conta);
     }
 
