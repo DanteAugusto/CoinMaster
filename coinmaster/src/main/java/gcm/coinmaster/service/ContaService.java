@@ -42,7 +42,9 @@ public class ContaService {
         Conta contaOrigem = contaRepository.findById(origem).orElse(null);
         Conta contaDestino = contaRepository.findById(destino).orElse(null);
 
-        if (contaOrigem != null && contaDestino != null && contaOrigem.getSaldo() >= valor) {
+        double valorComp = valor;
+        if(!(contaOrigem instanceof ContaPoupanca))valorComp = valorComp - 1000;
+        if (contaOrigem != null && contaDestino != null && contaOrigem.getSaldo() >= valorComp) {
             contaOrigem.setSaldo(contaOrigem.getSaldo() - valor);
             contaRepository.save(contaOrigem);
 
@@ -93,7 +95,7 @@ public class ContaService {
         }
         
         Conta conta = contaRepository.findById(numero).orElse(null);
-        if(conta != null && conta.getSaldo() >= valor) {
+        if(conta != null && conta.getSaldo() >= valor-1000) {
             conta.setSaldo(conta.getSaldo() - valor);
             contaRepository.save(conta);
         }
