@@ -17,8 +17,8 @@ public class ContaController {
     private ContaService contaService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Conta> cadastrarConta(@RequestParam String numero) {
-        Conta conta = contaService.cadastrarConta(numero);
+    public ResponseEntity<Conta> cadastrarConta(@RequestParam String numero, @RequestParam Double saldo) {
+        Conta conta = contaService.cadastrarConta(numero, saldo);
         return ResponseEntity.ok(conta);
     }
 
