@@ -13,10 +13,10 @@ public class ContaService {
     @Autowired
     private ContaRepository contaRepository;
 
-    public Conta cadastrarConta(String numero) {
+    public Conta cadastrarConta(String numero, Double saldo) {
         Conta conta = new Conta();
         conta.setNumero(numero);
-        conta.setSaldo(0.0);
+        conta.setSaldo(saldo);
         return contaRepository.save(conta);
     }
 
