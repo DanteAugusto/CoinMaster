@@ -27,8 +27,8 @@ public class ContaController {
     }
 
     @PostMapping("/cadastrarPoupanca")
-    public ResponseEntity<ContaPoupanca> cadastrarContaPoupanca(@RequestParam String numero) {
-        ContaPoupanca contaPoupanca = contaService.cadastrarContaPoupanca(numero);
+    public ResponseEntity<ContaPoupanca> cadastrarContaPoupanca(@RequestParam String numero, @RequestParam(required = false) Double saldoInicial) {
+        ContaPoupanca contaPoupanca = contaService.cadastrarContaPoupanca(numero, saldoInicial);
         return ResponseEntity.ok(contaPoupanca);
     }
 
