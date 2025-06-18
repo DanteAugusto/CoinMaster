@@ -49,7 +49,7 @@ public class ContaService {
             contaRepository.save(contaOrigem);
 
             if(contaDestino instanceof ContaBonus contaDestinoBonus) {
-                contaDestinoBonus.setPontuacao(contaDestinoBonus.getPontuacao() + (int) valor/200);
+                contaDestinoBonus.setPontuacao(contaDestinoBonus.getPontuacao() + (int) valor/150);
                 contaDestinoBonus.setSaldo(contaDestinoBonus.getSaldo() + valor);
                 contaRepository.save(contaDestinoBonus);
             } else {
