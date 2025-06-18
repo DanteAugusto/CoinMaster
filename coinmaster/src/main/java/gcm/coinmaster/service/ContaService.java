@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import gcm.coinmaster.model.Conta;
 import gcm.coinmaster.model.ContaPoupanca;
 import gcm.coinmaster.model.ContaBonus;
+import gcm.coinmaster.model.DTO.ContaDTO;
 import gcm.coinmaster.model.DTO.TransferenciaDTO;
 import gcm.coinmaster.repository.ContaRepository;
 
@@ -129,6 +130,11 @@ public class ContaService {
         }
 
         return retorno;
+    }
+
+    public ContaDTO consultarConta(String numero) {
+        Conta conta = contaRepository.findById(numero).orElse(null);
+        return conta != null ? new ContaDTO(conta) : null;
     }
 }
 

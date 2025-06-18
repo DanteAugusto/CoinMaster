@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import gcm.coinmaster.model.Conta;
 import gcm.coinmaster.model.ContaPoupanca;
 import gcm.coinmaster.model.ContaBonus;
+import gcm.coinmaster.model.DTO.ContaDTO;
 import gcm.coinmaster.model.DTO.TransferenciaDTO;
 import gcm.coinmaster.service.ContaService;
 
@@ -89,5 +90,10 @@ public class ContaController {
         Conta conta = contaService.debito(numero, valor);
         return ResponseEntity.ok(conta);
     }
-}
 
+    @GetMapping("/consultar-conta")
+    public ResponseEntity<ContaDTO> consultarConta(@RequestParam String numero) {
+        ContaDTO conta = contaService.consultarConta(numero);
+        return ResponseEntity.ok(conta);
+    }
+}
