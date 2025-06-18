@@ -136,5 +136,16 @@ public class ContaService {
         Conta conta = contaRepository.findById(numero).orElse(null);
         return conta != null ? new ContaDTO(conta) : null;
     }
+
+    public List<ContaDTO> consultarContas() {
+        List<Conta> contas = contaRepository.findAll();
+        List<ContaDTO> contasDTO = new ArrayList<>();
+
+        for (Conta conta : contas) {
+            contasDTO.add(new ContaDTO(conta));
+        }
+
+        return contasDTO;
+    }
 }
 
