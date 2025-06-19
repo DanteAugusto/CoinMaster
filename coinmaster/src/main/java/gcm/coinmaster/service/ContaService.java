@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import gcm.coinmaster.model.Conta;
 import gcm.coinmaster.model.ContaPoupanca;
 import gcm.coinmaster.model.ContaBonus;
+import gcm.coinmaster.model.DTO.ContaDTO;
 import gcm.coinmaster.model.DTO.TransferenciaDTO;
 import gcm.coinmaster.repository.ContaRepository;
 
@@ -42,7 +43,9 @@ public class ContaService {
         Conta contaOrigem = contaRepository.findById(origem).orElse(null);
         Conta contaDestino = contaRepository.findById(destino).orElse(null);
 
-        if (contaOrigem != null && contaDestino != null && contaOrigem.getSaldo() >= valor) {
+        double valorComp = valor;
+        if(!(contaOrigem instanceof ContaPoupanca))valorComp = valorComp - 1000;
+        if (contaOrigem != null && contaDestino != null && contaOrigem.getSaldo() >= valorComp) {
             contaOrigem.setSaldo(contaOrigem.getSaldo() - valor);
             contaRepository.save(contaOrigem);
 
@@ -92,17 +95,19 @@ public class ContaService {
         }
         
         Conta conta = contaRepository.findById(numero).orElse(null);
-        if(conta != null && conta.getSaldo() >= valor) {
+        double valorComp = valor;
+        if(!(conta instanceof ContaPoupanca))valorComp = valorComp - 1000;
+        if(conta != null && conta.getSaldo() >= valorComp) {
             conta.setSaldo(conta.getSaldo() - valor);
             contaRepository.save(conta);
         }
         return conta;
     }
 
-    public ContaPoupanca cadastrarContaPoupanca(String numero) {
+    public ContaPoupanca cadastrarContaPoupanca(String numero, Double saldoInicial) {
         ContaPoupanca conta = new ContaPoupanca();
         conta.setNumero(numero);
-        conta.setSaldo(0.0);
+        conta.setSaldo(saldoInicial);
         return contaRepository.save(conta);
     }
 
@@ -127,6 +132,22 @@ public class ContaService {
         }
 
         return retorno;
+    }
+
+    public ContaDTO consultarConta(String numero) {
+        Conta conta = contaRepository.findById(numero).orElse(null);
+        return conta != null ? new ContaDTO(conta) : null;
+    }
+
+    public List<ContaDTO> consultarContas() {
+        List<Conta> contas = contaRepository.findAll();
+        List<ContaDTO> contasDTO = new ArrayList<>();
+
+        for (Conta conta : contas) {
+            contasDTO.add(new ContaDTO(conta));
+        }
+
+        return contasDTO;
     }
 }
 
