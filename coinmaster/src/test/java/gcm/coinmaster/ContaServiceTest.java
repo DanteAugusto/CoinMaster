@@ -6,8 +6,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
-import org.aspectj.lang.annotation.Before;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -136,7 +134,6 @@ public class ContaServiceTest {
             assertEquals(null, contaService.porCredito(numero, credito));            
         }
 
-        // FIXME: tem que corrigir esse teste
         @Test
         void TestarCreditoContaBonus(){
             String numero = "12345";
@@ -147,13 +144,6 @@ public class ContaServiceTest {
             contaBonus.setSaldo(saldo);
             contaBonus.setPontuacao(0);
             when(contaRepository.findById(any())).thenReturn(Optional.of(contaBonus));
-            System.out.println("contaBonus: ");
-            System.out.println("numero" + contaBonus.getNumero());
-            System.out.println("saldo" + contaBonus.getSaldo());
-            System.out.println("pontuacao" + contaBonus.getPontuacao());
-            System.out.println("contaService.porCredito(numero, credito): ");
-            System.out.println("numero" + contaService.porCredito(numero, credito).getNumero());
-            System.out.println("saldo" + contaService.porCredito(numero, credito).getSaldo());
             assertEquals(contaBonus, contaService.porCredito(numero, credito));            
         }
     }
