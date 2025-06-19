@@ -2,7 +2,9 @@ package gcm.coinmaster.model.DTO;
 
 import gcm.coinmaster.model.Conta;
 import gcm.coinmaster.model.ContaBonus;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode
 public class ContaDTO {
     private String numero;
     private double saldo;
