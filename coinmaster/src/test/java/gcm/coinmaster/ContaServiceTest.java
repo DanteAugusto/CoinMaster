@@ -155,7 +155,8 @@ public class ContaServiceTest {
             contaBonus.setSaldo(saldo);
             contaBonus.setPontuacao(0);
             when(contaRepository.findById(any())).thenReturn(Optional.of(contaBonus));
-            assertEquals(credito/100, (ContaBonus) contaService.porCredito(numero, credito));            
+            ContaBonus contaRetornada = (ContaBonus) contaService.porCredito(numero, credito);
+            assertEquals(credito/100, contaRetornada.getPontuacao(), 0.00001);            
         }
     }
 
