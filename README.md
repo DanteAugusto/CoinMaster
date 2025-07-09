@@ -29,3 +29,13 @@ Paulo Vitor Lima Borges [(PauloVLB)](https://github.com/PauloVLB)
 
 4. **Acesse a aplicação**:
     - Abra seu cliente de API favorito (Postman, Insomnia, etc.) e faça requisições para os endpoints disponíveis.
+
+## Como rodar a aplicação usando Docker
+```bash
+docker pull paulovlb/coinmaster:latest
+
+docker run -p 8080:8080 paulovlb/coinmaster:latest
+```
+Acesse: http://localhost:8080
+
+[Ver imagem no Docker Hub](https://hub.docker.com/r/paulovlb/coinmaster)
