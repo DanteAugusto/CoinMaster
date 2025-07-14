@@ -69,7 +69,7 @@ public class ContaController {
     @GetMapping("/{numero}/saldo")
     public ResponseEntity<Double> consultarSaldo(@PathVariable String numero) {
         double saldo = contaService.consultarSaldo(numero);
-        return ResponseEntity.okk(saldo);
+        return ResponseEntity.ok(saldo);
     } 
 
     @PutMapping("/{numero}/debito")
