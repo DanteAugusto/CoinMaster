@@ -70,10 +70,10 @@ public class ContaService {
         if (conta != null) {
             if(conta instanceof ContaBonus contaBonus) {
                 contaBonus.setPontuacao(contaBonus.getPontuacao() + (int) credito/100);
-                contaBonus.setSaldo(contaBonus.getSaldo() + credito);
+                // contaBonus.setSaldo(contaBonus.getSaldo() + credito);
                 contaRepository.save(contaBonus);
             } else {
-                conta.setSaldo(conta.getSaldo() + credito);
+                // conta.setSaldo(conta.getSaldo() + credito);
                 contaRepository.save(conta);
             }
         }
