@@ -97,6 +97,7 @@ public class ContaService {
         Conta conta = contaRepository.findById(numero).orElse(null);
         double valorComp = valor;
         if(!(conta instanceof ContaPoupanca))valorComp = valorComp - 1000;
+        if(conta instanceof ContaBonus) valorComp = valorComp - 1000;
         if(conta != null && conta.getSaldo() >= valorComp) {
             conta.setSaldo(conta.getSaldo() - valor);
             contaRepository.save(conta);
